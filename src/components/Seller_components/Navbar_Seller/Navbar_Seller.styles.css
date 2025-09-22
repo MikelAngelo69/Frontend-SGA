@@ -1,0 +1,42 @@
+.navbar-seller {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(155, 89, 182, 0.3);
+  color: #4b0082;
+  font-weight: bold;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-seller-center {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.navbar-seller-center li {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.navbar-seller-center li:hover {
+  color: #9b59b6;
+  transform: scale(1.05);
+}
+
+.navbar-seller-right .login-icon-seller {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s, color 0.3s;
+}
+
+.navbar-seller-right .login-icon-seller:hover {
+  color: #9b59b6;
+  transform: scale(1.2);
+}

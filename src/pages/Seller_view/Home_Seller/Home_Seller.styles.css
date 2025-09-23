@@ -13,7 +13,7 @@
 .home-seller .overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0,0,0,0.6);
+  background: linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,1));
   z-index: 0;
 }
 
@@ -29,18 +29,25 @@
   padding: 50px 20px;
 }
 
+.seller-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .seller-title {
   font-size: 4rem;
   color: #4b0082;
-  text-align: center;
   animation: fadeInDown 1s ease forwards;
+  padding: 0px;
 }
 
 .seller-subtitle {
-  font-size: 1.8rem;
-  color: #333;
-  text-align: center;
+  font-size: 1.4rem;
+  color: #9b59b6;
   animation: fadeInDown 1.2s ease forwards;
+  margin-top: -30px;
 }
 
 @keyframes fadeInDown {

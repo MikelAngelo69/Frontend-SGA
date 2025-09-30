@@ -16,12 +16,11 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
-      <div className="navbar-left">SGA</div>
+      <Link to="/" className="navbar-left">SGA</Link>
       <ul className="navbar-center">
         <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/catalogo">Catálogo</Link></li>
-        <li><Link to="/accesorios">Accesorios</Link></li>
-        <li><Link to="/preguntas-frecuentes">Preguntas Frecuentes</Link></li>
+        <li><Link to="/catalog">Catálogo</Link></li>
+        <li><Link to="/faq">Preguntas Frecuentes</Link></li>
       </ul>
       <div className="navbar-right">
         <Link to="/sign-in"><FaUser className="login-icon" /></Link>

@@ -29,7 +29,7 @@ const Home = () => {
         <section className="section-center">
           <h2>Nuestra Esencia</h2>
           <p>En SGA, creemos que cada ocasión merece un estilo único. Nos especializamos en el alquiler de vestidos elegantes y modernos, ofreciendo una experiencia práctica y accesible para que brilles sin preocuparte por repetir atuendo o gastar de más. </p>
-          <button className="section-btn">Llamado a la Acción</button>
+          <button className="section-btn">Ven y conocenos</button>
         </section>
 
 

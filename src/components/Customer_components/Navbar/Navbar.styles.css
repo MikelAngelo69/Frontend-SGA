@@ -14,7 +14,8 @@
 .navbar-left {
   font-size: 24px;
   font-weight: bold;
-
+  text-decoration: none;
+  color: aliceblue;
 }
 
 .navbar-left:hover {
@@ -54,5 +55,5 @@
 }
 
 .navbar-center li a:hover {
-  color: #9b59b6; /* morado elegante */
+  color: #9b59b6;
 }

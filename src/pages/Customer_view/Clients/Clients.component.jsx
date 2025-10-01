@@ -35,8 +35,8 @@ const Clients = () => {
   return (
     <>
 
-        <NavbarSeller></NavbarSeller>
-        <div className="clients-wrapper">
+      <NavbarSeller></NavbarSeller>
+      <div className="clients-wrapper">
       <div className="clients-header">
         <h1 className="clients-title">Lista de Clientes</h1>
         <input
@@ -59,16 +59,16 @@ const Clients = () => {
         </div>
 
         {clients.map((cli) => (
-          <div key={cli.numDoc} className="client-card">
+          <div key={cli.numeroDoc} className="client-card">
             <div className="client-body">
-              <div className="client-field">{cli.nom1}</div>
-              {/* <div className="client-field">{client.email}</div>
-              <div className="client-field">{client.phone}</div>
-              <div className="client-field">{client.firstRental.toLocaleDateString()}</div>
-              <div className="client-buttons">
-                <button className="update-btn" onClick={() => handleEdit(client)}>Actualizar</button>
-                <button className="delete-btn" onClick={() => handleDelete(client.id)}>Eliminar</button>
-              </div> */}
+              <div className="client-field">{cli.nombre1}</div>
+              <div className="client-field">{cli.nombre2}</div>
+              <div className="client-field">{cli.apellido1}</div>
+              <div className="client-field">{cli.apellido2}</div>
+              <div className="client-field">{cli.dire}</div>
+              <div className="client-field">{cli.telefono}</div>
+              <div className="client-field">{cli.correoElectronico}</div>
+              <div className="client-field">{cli.nombar}</div>
             </div>
           </div>
         ))}

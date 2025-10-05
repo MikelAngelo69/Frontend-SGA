@@ -8,8 +8,8 @@ export const obtenerUsuario = async () => {
     return await res.json();
 }
 
-export const crearUsuario = async () => {
-    const res = await fetch (`${BASE_URL}/ConsultarUsuarios`,{
+export const crearUsuario = async (data) => {
+    const res = await fetch (`${BASE_URL}/crear`,{
         method: "POST",
         headers: {"content-Type":"application/json"},
         body: JSON.stringify(data),

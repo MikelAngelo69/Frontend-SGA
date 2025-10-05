@@ -17,7 +17,7 @@ const Clients = () => {
 
   // const handleDelete = (id) => {
   //   setClients(clients.filter(client => client.id !== id));
-  // };
+  // 
 
   // const handleEdit = (client) => {
   //   setEditingClient(client);
@@ -66,9 +66,10 @@ const Clients = () => {
               <div className="client-field">{cli.apellido1}</div>
               <div className="client-field">{cli.apellido2}</div>
               <div className="client-field">{cli.dire}</div>
-              <div className="client-field">{cli.telefono}</div>
+              <div className="client-field">{cli.tele}</div>
               <div className="client-field">{cli.correoElectronico}</div>
-              <div className="client-field">{cli.nombar}</div>
+              <div className="client-field">{cli.nomBar}</div>
+              <button>Eliminar</button>
             </div>
           </div>
         ))}

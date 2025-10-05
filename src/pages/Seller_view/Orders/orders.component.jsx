@@ -1,26 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Orders.styles.css";
 import NavbarSeller from "../../../components/Seller_components/Navbar_Seller/Navbar_seller.component";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { obtenerAlquiler } from "../../../api/alquilerArticulosApi";
+import { data } from "react-router-dom";
 
-const initialOrders = [
-  { orderNumber: "1001", item: "Camiseta edición limitada", observations: "Entrega rápida", client: "Anuel AA", phone: "3101234567", date: new Date() },
-  { orderNumber: "1002", item: "Pantalón deportivo", observations: "Cambiar talla si no queda", client: "Karol G", phone: "3119876543", date: new Date() },
-  { orderNumber: "1003", item: "Chaqueta impermeable", observations: "Color diferente solicitado", client: "Bad Bunny", phone: "3125554433", date: new Date() },
-  { orderNumber: "1004", item: "Zapatos running", observations: "Urgente", client: "J Balvin", phone: "3132223344", date: new Date() },
-  { orderNumber: "1005", item: "Gorra oficial", observations: "Sin observaciones", client: "Maluma", phone: "3141112233", date: new Date() },
-  { orderNumber: "1006", item: "Sudadera", observations: "Entrega normal", client: "Ozuna", phone: "3159988776", date: new Date() },
-    { orderNumber: "1007", item: "Zapatos running", observations: "Urgente", client: "J Balvin", phone: "3132223344", date: new Date() },
-  { orderNumber: "1008", item: "Gorra oficial", observations: "Sin observaciones", client: "Maluma", phone: "3141112233", date: new Date() },
-  { orderNumber: "1009", item: "Sudadera", observations: "Entrega normal", client: "Ozuna", phone: "3159988776", date: new Date() },
-    { orderNumber: "10010", item: "Zapatos running", observations: "Urgente", client: "J Balvin", phone: "3132223344", date: new Date() },
-  { orderNumber: "1011", item: "Gorra oficial", observations: "Sin observaciones", client: "Maluma", phone: "3141112233", date: new Date() },
-  { orderNumber: "1012", item: "Sudadera", observations: "Entrega normal", client: "Ozuna", phone: "3159988776", date: new Date() },
-];
 
 const Orders = () => {
-  const [orders, setOrders] = useState(initialOrders);
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    obtenerAlquiler().then((data) => setOrders(data))
+  }, [])
+
   const [startDate, setStartDate] = useState(new Date());
   const [searchText, setSearchText] = useState("");
   const [editingOrder, setEditingOrder] = useState(null);
@@ -84,11 +76,12 @@ const Orders = () => {
         <p className="orders-subtitle">Lista completa de órdenes registradas</p>
 
         <div className="orders-list">
-          {orders.map((order, index) => (
-            <div key={index} className="order-card">
+          {orders.map((order) => (
+            <div key={order.alquilerId} className="order-card">
 <div className="order-header">
   <span>Número de orden</span>
   <span>Artículo</span>
+  <span>Talla</span>
   <span>Observaciones</span>
   <span>Cliente</span>
   <span>Teléfono</span>
@@ -96,12 +89,13 @@ const Orders = () => {
   <span>Acciones</span>
 </div>
 <div className="order-body">
-  <div className="order-field">{order.orderNumber}</div>
-  <div className="order-field">{order.item}</div>
-  <div className="order-field">{order.observations}</div>
-  <div className="order-field">{order.client}</div>
-  <div className="order-field">{order.phone}</div>
-  <div className="order-field">{order.date.toLocaleDateString()}</div>
+  <div className="order-field">{order.alquilerId}</div>
+  <div className="order-field">{order.nomArticulo}</div>
+  <div className="order-field">{order.tallaArticulo}</div>
+  <div className="order-field">{order.observaciones}</div>
+  <div className="order-field">{order.nomCliente}</div>
+  <div className="order-field">{order.telCliente}</div>
+  <div className="order-field">{order.fechaEntrega}</div>
   <div className="order-buttons">
     <button className="update-btn" onClick={() => handleEdit(order)}>Actualizar</button>
     <button className="delete-btn" onClick={() => handleDelete(order.orderNumber)}>Eliminar</button>

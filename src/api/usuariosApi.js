@@ -17,3 +17,15 @@ export const crearUsuario = async (data) => {
     if (!res.ok) throw new Error("No se puede crear el usuario creado");
     return await res.json();
 }
+
+
+export const editarUsuario = async (id, data) => {
+    console.log("in",id)
+    const res = await fetch (`${BASE_URL}/actualizar/${id}`,{
+        method: "PUT",
+        headers: {"content-Type":"application/json"},
+        body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("No se puede editar el usuario");
+    return await res.json();
+}

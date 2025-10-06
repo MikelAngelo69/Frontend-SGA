@@ -8,9 +8,9 @@ import { crearUsuario } from "../../../api/usuariosApi";
 export default function NewClient() {
 
   const handleCrearUsuario = async (e) => {
-  e.preventDefault(); // evita que la página se recargue
+  e.preventDefault();
   try {
-    await crearUsuario(formData); // aquí sí mandas tus datos
+    await crearUsuario(formData);
     console.log("Usuario creado correctamente");
   } catch (error) {
     console.error("Error al crear usuario:", error);
@@ -52,10 +52,10 @@ export default function NewClient() {
         <form onSubmit={handleCrearUsuario} modo="crear" className="nc-form">
 
           <div className="nc-form-row">
-            <input onChange={handleChange} type="text" placeholder="PrimerNombre" name="nombre1" value={formData.nombre1} className="nc-input" />
-            <input onChange={handleChange} type="text" placeholder="SegundoNombre" name="nombre2" value={formData.nombre2} className="nc-input" />
-            <input onChange={handleChange} type="text" placeholder="PrimerApellido" name="apellido1" value={formData.apellido1} className="nc-input" />
-            <input onChange={handleChange} type="text" placeholder="SegundoApellido" name="apellido2" value={formData.apellido2} className="nc-input" />
+            <input onChange={handleChange} type="text" placeholder="Primer Nombre" name="nombre1" value={formData.nombre1} className="nc-input" />
+            <input onChange={handleChange} type="text" placeholder="Segundo Nombre" name="nombre2" value={formData.nombre2} className="nc-input" />
+            <input onChange={handleChange} type="text" placeholder="Primer Apellido" name="apellido1" value={formData.apellido1} className="nc-input" />
+            <input onChange={handleChange} type="text" placeholder="Segundo Apellido" name="apellido2" value={formData.apellido2} className="nc-input" />
           </div>
 
           <div className="nc-form-row">
@@ -71,8 +71,8 @@ export default function NewClient() {
             <input type="text" placeholder="tipo de documento" onChange={handleChange} name="idTipoDoc" value={formData.idTipoDoc} className="nc-input"/>
             <input type="text" placeholder="Rol" onChange={handleChange} name="idRol" value={formData.idRol} className="nc-input"/>
           </div>
-          <button type="submit" className="nc-button"> Guardar cliente </button>
-          <Link  to="/home-seller/new-order" className="nc-button">Crear Alquiler</Link>
+          
+          <Link  to="/home-seller/new-order" className="nc-button"><button type="submit" className="nc-button"> Guardar cliente </button></Link>
         </form>
       </div>
     </div>

@@ -4,7 +4,7 @@ import NavbarSeller from "../../../components/Seller_components/Navbar_Seller/Na
 import { FaPencilAlt } from "react-icons/fa";
 import { actualizarArticulo, obtenerArticulo } from "../../../api/articulosApi";
 
-const categories = ["Todos", "Éxitos", "Clásicos", "Favoritas"];
+const categories = ["Para dama", "Para caballero", "Para niño"];
 
 const Inventory = () => {
   const [articulos, setArticulos] = useState([]);
@@ -26,7 +26,15 @@ const Inventory = () => {
   const handleActualizarArticulo = async (e) => {
     e.preventDefault();
     try {
-      await actualizarArticulo(editingId, editedData);
+      const dataToSend = {
+        "idArt": editingId,
+        "precioArti": editedData.precioArt,
+        "fotoArti": editedData.fotoArt,
+      };
+      console.log(dataToSend)
+      console.log(editingId)
+      await actualizarArticulo(editingId, dataToSend);
+
       setArticulos((prev) =>
         prev.map((item) =>
           item.idArt === editingId ? { ...item, ...editedData } : item
@@ -53,9 +61,9 @@ const Inventory = () => {
       </aside>
 
       <div className="inventory-container">
-        <h1 className="inventory-title">Top Mejores Bellakeos de la historia</h1>
+        <h1 className="inventory-title">Inventario de vestidos</h1>
         <p className="inventory-subtitle">
-          Las mejores canciones y puto el que diga lo contrario
+          A continuación se mostraran todos los vestidos correspondiente en los cuales podras cambiar su precio o su foto.
         </p>
 
         <div className="cards-container">
@@ -87,17 +95,17 @@ const Inventory = () => {
               <h2>Editar canción</h2>
               <input
                 type="text"
-                value={editedData.precioArt}
+                value={editedData.precioArt || ""}
                 onChange={(e) =>
-                  setEditedData({ ...editedData, precioArti: e.target.value })
+                  setEditedData({ ...editedData, precioArt: e.target.value })
                 }
                 placeholder="precio"
               />
               <input
                 type="text"
-                value={editedData.fotoArt}
+                value={editedData.fotoArt || ""}
                 onChange={(e) =>
-                  setEditedData({ ...editedData, fotoArti: e.target.value })
+                  setEditedData({ ...editedData, fotoArt: e.target.value })
                 }
                 placeholder="foto"
               />

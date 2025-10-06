@@ -37,7 +37,7 @@ export default function NewOrder() {
             <h2>Información del Cliente</h2>
             <div className="customer-row">
               <input type="text" value="miguel" className="input-field" readOnly />
-              <input type="email" value="miguel@sexo.com" className="input-field" readOnly />
+              <input type="email" value="prueba@ejemplo.com" className="input-field" readOnly />
             </div>
             <div className="customer-row">
               <input type="text" value="asassaas" className="input-field" readOnly />

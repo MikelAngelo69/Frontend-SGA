@@ -1,118 +1,190 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Clients.styles.css";
 import NavbarSeller from "../../../components/Seller_components/Navbar_Seller/Navbar_seller.component";
-import { obtenerUsuario } from "../../../api/usuariosApi";
-
+import { obtenerUsuario, editarUsuario } from "../../../api/usuariosApi";
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
-  // const [editingClient, setEditingClient] = useState(null);
-  // const [searchTerm, setSearchTerm] = useState("");
+  const [editingId, setEditingId] = useState(null);
+  const [editedData, setEditedData] = useState({
+    numDocumento: 0,
+    nombre1: "",
+    nombre2: "",
+    apellido1: "",
+    apellido2: "",
+    correoElectronico: "",
+    tele: "",
+  });
 
   useEffect(() => {
-    obtenerUsuario().then((data) => setClients(data)) 
-// Guardar empleados en el estado
+    obtenerUsuario().then((data) => setClients(data));
   }, []);
 
+  const handleEditClick = (client) => {
+    setEditingId(client.numDocumento);
+    setEditedData({
+      nombre1: client.nombre1,
+      nombre2: client.nombre2,
+      apellido1: client.apellido1,
+      apellido2: client.apellido2,
+      correoElectronico: client.correoElectronico,
+      tele: client.tele,
+    });
+  };
 
-  // const handleDelete = (id) => {
-  //   setClients(clients.filter(client => client.id !== id));
-  // 
+  const handleActualizarUsuario = async (e) => {
+    e.preventDefault();
+    try {
+      const dataToSend = {
+        numDocumento: cli.numDocumento,
+        nombre1: editedData.nombre1,
+        nombre2: editedData.nombre2,
+        apellido1: editedData.apellido1,
+        apellido2: editedData.apellido2,
+        correoElectronico: editedData.correoElectronico,
+        tele: editedData.tele,
+      };
 
-  // const handleEdit = (client) => {
-  //   setEditingClient(client);
-  // };
+      console.log("in2",editingId)
+      console.log("data",dataToSend )
+      await editarUsuario(editingId, dataToSend);
 
-  // const handleUpdate = () => {
-  //   setClients(clients.map(c => c.id === editingClient.id ? editingClient : c));
-  //   setEditingClient(null);
-  // };
+      setClients((prev) =>
+        prev.map((c) =>
+          c.numeroDoc === editingId ? { ...c, ...editedData } : c
+        )
+      );
+      setEditingId(null);
+      setEditedData({
+        nombre1: "",
+        nombre2: "",
+        apellido1: "",
+        apellido2: "",
+        correoElectronico: "",
+        tele: "",
+      });
+    } catch (error) {
+      console.log("Error al editar el usuario:", error);
+    }
+  };
 
-  // const handleCancel = () => {
-  //   setEditingClient(null);
-  // };
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedData({
+      nombre1: "",
+      nombre2: "",
+      apellido1: "",
+      apellido2: "",
+      correoElectronico: "",
+      tele: "",
+    });
+  };
 
   return (
     <>
-
-      <NavbarSeller></NavbarSeller>
+      <NavbarSeller />
       <div className="clients-wrapper">
-      <div className="clients-header">
-        <h1 className="clients-title">Lista de Clientes</h1>
-        <input
-          className="search-input"
-          placeholder="Buscar cliente"
-          // value={searchTerm}
-          // onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-      <p className="clients-subtitle">Todos los clientes registrados</p>
-
-      <div className="clients-list">
-        <div className="client-header">
-          <span>Documento</span>
-          <span>Nombre</span>
-          <span>Correo</span>
-          <span>Teléfono</span>
-          <span>Fecha primer alquiler</span>
-          <span>Acciones</span>
+        <div className="clients-header">
+          <h1 className="clients-title">Lista de Clientes</h1>
+          <input className="search-input" placeholder="Buscar cliente" />
         </div>
+        <p className="clients-subtitle">Todos los clientes registrados</p>
 
-        {clients.map((cli) => (
-          <div key={cli.numeroDoc} className="client-card">
-            <div className="client-body">
-              <div className="client-field">{cli.nombre1}</div>
-              <div className="client-field">{cli.nombre2}</div>
-              <div className="client-field">{cli.apellido1}</div>
-              <div className="client-field">{cli.apellido2}</div>
-              <div className="client-field">{cli.dire}</div>
-              <div className="client-field">{cli.tele}</div>
-              <div className="client-field">{cli.correoElectronico}</div>
-              <div className="client-field">{cli.nomBar}</div>
-              <button>Eliminar</button>
-            </div>
+        <div className="clients-list">
+          <div className="client-header">
+            <span>Documento</span>
+            <span>Nombre 1</span>
+            <span>Nombre 2</span>
+            <span>Apellido 1</span>
+            <span>Apellido 2</span>
+            <span>Correo</span>
+            <span>Teléfono</span>
+            <span>Acciones</span>
           </div>
-        ))}
+
+          {clients.map((cli) => (
+            <div key={cli.numeroDoc} className="client-card">
+              <div className="client-body">
+                <div className="client-field">{cli.numeroDoc}</div>
+                <div className="client-field">{cli.nombre1}</div>
+                <div className="client-field">{cli.nombre2}</div>
+                <div className="client-field">{cli.apellido1}</div>
+                <div className="client-field">{cli.apellido2}</div>
+                <div className="client-field">{cli.correoElectronico}</div>
+                <div className="client-field">{cli.tele}</div>
+                <button onClick={() => handleEditClick(cli)}>Editar</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* {editingClient && (
-        <div className="edit-overlay">
-          <div className="edit-modal">
+      {editingId !== null && (
+        <div className="modal-overlay">
+          <form className="modal" onSubmit={handleActualizarUsuario}>
+            <h2>Editar Cliente</h2>
             <input
-              value={editingClient.document}
-              onChange={(e) => setEditingClient({ ...editingClient, document: e.target.value })}
-              placeholder="Documento"
+              type="text"
+              value={editedData.nombre1}
+              onChange={(e) =>
+                setEditedData({ ...editedData, nombre1: e.target.value })
+              }
+              placeholder="Nombre 1"
             />
             <input
-              value={editingClient.name}
-              onChange={(e) => setEditingClient({ ...editingClient, name: e.target.value })}
-              placeholder="Nombre"
+              type="text"
+              value={editedData.nombre2}
+              onChange={(e) =>
+                setEditedData({ ...editedData, nombre2: e.target.value })
+              }
+              placeholder="Nombre 2"
             />
             <input
-              value={editingClient.email}
-              onChange={(e) => setEditingClient({ ...editingClient, email: e.target.value })}
-              placeholder="Correo"
+              type="text"
+              value={editedData.apellido1}
+              onChange={(e) =>
+                setEditedData({ ...editedData, apellido1: e.target.value })
+              }
+              placeholder="Apellido 1"
             />
             <input
-              value={editingClient.phone}
-              onChange={(e) => setEditingClient({ ...editingClient, phone: e.target.value })}
+              type="text"
+              value={editedData.apellido2}
+              onChange={(e) =>
+                setEditedData({ ...editedData, apellido2: e.target.value })
+              }
+              placeholder="Apellido 2"
+            />
+            <input
+              type="text"
+              value={editedData.correoElectronico}
+              onChange={(e) =>
+                setEditedData({ ...editedData, correoElectronico: e.target.value })
+              }
+              placeholder="Correo Electrónico"
+            />
+            <input
+              type="text"
+              value={editedData.tele}
+              onChange={(e) =>
+                setEditedData({ ...editedData, tele: e.target.value })
+              }
               placeholder="Teléfono"
             />
-            <input
-              type="date"
-              value={editingClient.firstRental.toISOString().split("T")[0]}
-              onChange={(e) => setEditingClient({ ...editingClient, firstRental: new Date(e.target.value) })}
-            />
-            <div className="edit-buttons">
-              <button onClick={handleUpdate}>Actualizar</button>
-              <button onClick={handleCancel}>Cancelar</button>
+            <div className="modal-buttons">
+              <button type="submit">Actualizar</button>
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="cancel-button"
+              >
+                Cancelar
+              </button>
             </div>
-          </div>
+          </form>
         </div>
-      )} */}
-    </div>
+      )}
     </>
-   
   );
 };
 

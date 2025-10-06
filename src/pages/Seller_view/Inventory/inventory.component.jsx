@@ -2,7 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import "./Inventory.styles.css";
 import NavbarSeller from "../../../components/Seller_components/Navbar_Seller/Navbar_seller.component";
 import { FaPencilAlt } from "react-icons/fa";
-import { obtenerArticulo } from "../../../api/articulosApi";
+import { actualizarArticulo, obtenerArticulo, obtenerArticuloporId } from "../../../api/articulosApi";
 import { data } from "react-router-dom";
 
 
@@ -11,29 +11,36 @@ const categories = ["Todos", "Éxitos", "Clásicos", "Favoritas"];
 const Inventory = () => {
 
 const [articulos, setArticulos] = useState([]);
-
+const [editarArticulo, setEditarArticulo] = useState(null);
 useEffect(() => {
   obtenerArticulo().then((data) => setArticulos(data))
 },[])
 
+const handleActualizarArticulo = async (data) => {
+  try{
+    // const articuloActualizado = await obtenerArticuloporId(editarArticulo.id);
+
+    // setArticulos((prev) =>
+    //   prev.map((e) => (e.id === editarArticulo.id ? articuloActualizado : e))
+    // );
+    
+    await actualizarArticulo(editarArticulo.id,data);
+  }
+  catch (error){
+    console.log("error al editar el usuario")
+  }
+}
 
   // const [songs, setSongs] = useState(initialSongs);
-  // const [editingIndex, setEditingIndex] = useState(null);
-  // const [editedData, setEditedData] = useState({ name: "", subtitle: "", price: "" });
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editedData, setEditedData] = useState({ precioArti: "", fotoArti: ""});
 
-  // const handleEditClick = (index) => {
-  //   setEditingIndex(index);
-  //   setEditedData({ ...songs[index] });
-  // };
+  const handleEditClick = (index) => {
+    setEditingIndex(index);
+    setEditedData({ ...articulos[index] });
+  };
 
-  // const handleUpdate = () => {
-  //   const updatedSongs = [...songs];
-  //   updatedSongs[editingIndex] = editedData;
-  //   setSongs(updatedSongs);
-  //   setEditingIndex(null);
-  // };
-
-  // const handleCancel = () => setEditingIndex(null);
+  const handleCancel = () => setEditingIndex(null);
 
   return (
     <div className="inventory-wrapper">
@@ -58,40 +65,34 @@ useEffect(() => {
               <p className="player-subtitle">{art.precioArt}</p>
               <p className="player-subtitle">{art.generoArt}</p>
               <p className="player-price">{art.colorArt}</p>
-              {/* <span className="edit-text" onClick={() => handleEditClick(index)}><FaPencilAlt/></span> */}
+              <span className="edit-text" onClick={() => handleEditClick(art.idArt)}><FaPencilAlt/></span>
             </div>
           ))}
         </div>
 
-        {/* {editingIndex !== null && (
+        {editingIndex !== null && (
           <div className="modal-overlay">
-            <div className="modal">
+            <form onSubmit={handleActualizarArticulo} className="modal">
               <h2>Editar canción</h2>
               <input
                 type="text"
-                value={editedData.name}
-                onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
-                placeholder="Nombre"
+                value={editedData.precioArti}
+                onChange={(e) => setEditedData({ ...editedData, precioArt: e.target.value })}
+                placeholder="precio"
               />
               <input
                 type="text"
-                value={editedData.subtitle}
-                onChange={(e) => setEditedData({ ...editedData, subtitle: e.target.value })}
-                placeholder="Subtítulo"
-              />
-              <input
-                type="text"
-                value={editedData.price}
-                onChange={(e) => setEditedData({ ...editedData, price: e.target.value })}
-                placeholder="Precio"
+                value={editedData.fotoArti}
+                onChange={(e) => setEditedData({ ...editedData, fotoArt: e.target.value })}
+                placeholder="foto"
               />
               <div className="modal-buttons">
-                <button onClick={handleUpdate}>Actualizar</button>
+                <button type="onSubmit">Actualizar</button>
                 <button onClick={handleCancel} className="cancel-button">Cancelar</button>
               </div>
-            </div>
+            </form>
           </div>
-        )} */}
+        )}
 
       </div>
     </div>

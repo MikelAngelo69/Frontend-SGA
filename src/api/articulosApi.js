@@ -8,7 +8,7 @@ export const obtenerArticulo = async () => {
     });
     if (!res.ok) throw new Error ("Este articulo no existe");
     return await res.json();
-}
+};
 
 export const crearArticulo = async (data) => {
     const res = await fetch(`${BASE_URL}/Crear`,{
@@ -18,4 +18,22 @@ export const crearArticulo = async (data) => {
     });
     if (!res.ok) throw new Error("no se articula el articulo");
     return await res.json();
-}
+};
+
+export const actualizarArticulo = async(id,data) => {
+    const res = await fetch(`${BASE_URL}/Actualizar/${id}`,{
+        method: "POST",
+        headers: {"content-Type:":"application/json"},
+        body: JSON.stringify(data),
+    });
+    if (!res.ok) throw new Error("Error al actualizar el articulo");
+    return res.json();
+};
+
+export const obtenerArticuloporId = async (id) => {
+    const res = await fetch(`${BASE_URL}/ConsultarById/${id}`,{
+        method: "GET",
+    });
+    if (!res.ok) throw new Error("Articulo no encontrado");
+    return res.json();
+};

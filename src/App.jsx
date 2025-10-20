@@ -11,13 +11,10 @@ import Orders from "./pages/Seller_view/Orders/orders.component";
 import Clients from "./pages/Customer_view/Clients/Clients.component";
 import Catalog from "./pages/Customer_view/Catalog/catalog.component";
 import Faq from "./pages/Customer_view/Faq/Faq.component";
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
 
 function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  );
+  return <AppContent />;
 }
 
 function AppContent() {
@@ -33,13 +30,64 @@ function AppContent() {
         <Route path="/Faq" element={<Faq />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/home-seller" element={<HomeSeller />} />
-        <Route path="/home-seller/new-rent" element={<NewRent />} />
-        <Route path="/home-seller/new-client" element={<NewClient />} />
-        <Route path="/home-seller/new-order" element={<NewOrder />} />
-        <Route path="/home-seller/inventory" element={<Inventory />} />
-        <Route path="/home-seller/orders" element={<Orders />} />
-        <Route path="/home-seller/clients" element={<Clients />} />
+
+        {/* Seller routes protected */}
+        <Route
+          path="/home-seller"
+          element={
+            <ProtectedRoute>
+              <HomeSeller />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/new-rent"
+          element={
+            <ProtectedRoute>
+              <NewRent />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/new-client"
+          element={
+            <ProtectedRoute>
+              <NewClient />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/new-order"
+          element={
+            <ProtectedRoute>
+              <NewOrder />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/inventory"
+          element={
+            <ProtectedRoute>
+              <Inventory />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/orders"
+          element={
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/home-seller/clients"
+          element={
+            <ProtectedRoute>
+              <Clients />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {!isSellerRoute && <WhatsappButton />}

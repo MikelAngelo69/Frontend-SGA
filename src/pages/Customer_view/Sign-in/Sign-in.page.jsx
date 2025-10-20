@@ -1,17 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Sign-in.styles.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import BackgroundSignIn from "../../../assets/BackgroundSignIn.png";
 import { Link } from "react-router-dom";
+import AuthContext from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setError("");
+    const res = login({ email, password });
+    if (res.ok) {
+      // redirect to seller home on successful login
+      navigate("/home-seller");
+    } else {
+      setError(res.error || "Credenciales inválidas");
+    }
   };
 
   return (
@@ -49,8 +60,9 @@ const SignIn = () => {
             />
             <FaLock className="input-icon" />
           </div>
-          <Link className="signin-btn" to="/home-seller">Ingresar</Link>
+          <button className="signin-btn" type="submit">Ingresar</button>
         </form>
+        {error && <p className="signin-error">{error}</p>}
         <p className="signin-footer">
           ¿No tienes cuenta? <a href="/signup">Regístrate aquí</a>
         </p>
